@@ -4,5 +4,7 @@ To get a better grasp of the [d3.js](http://www.d3js.org/) visualization library
 
 Suggestions or comments? Email me at `nirum@stanford.edu`
 
-I'll be adding one a day. The full list is here:
-- Day 1: Linear Regression
+The HTML for each visualization is in the `partials/` folder, and the corresponding javascript is in `js/controllers.js` (I used Angular to host the pages).
+
+I'll be adding one visualization a day. The full list is here:
+- August 25, 2013: Linear Regression
