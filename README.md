@@ -8,3 +8,4 @@ The HTML for each visualization is in the `partials/` folder, and the correspond
 
 I'll be adding one visualization a day. The full list is here:
 - August 25, 2013: Linear Regression
+- August 26, 2013: Moving Dots

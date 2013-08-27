@@ -82,14 +82,11 @@ body {
 // axes
 .axis path,
 .axis tick {
-    /*fill: none;*/
-    /*stroke: black;*/
-    /*shape-rendering: crispEdges;*/
 }
 
 .axis path, .axis tick {
 		stroke: black;
-		stroke-width: 0.5px;
+		stroke-width: 1px;
 		fill: none;
 		shape-rendering: crispEdges;
 }
