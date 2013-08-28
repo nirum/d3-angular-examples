@@ -7,7 +7,8 @@ angular.module('d3-100.controllers', [], function() {})
 .controller('ListCtrl', function($scope) {
    $scope.visualizations = [
 				"Linear Regression",
-				"Moving Dots"
+				"Moving Dots",
+				"Sine Wave"
 		];
 })
 
@@ -142,5 +143,66 @@ angular.module('d3-100.controllers', [], function() {})
 				refresh();
 				update();
 		}, 500);
+
+})
+
+.controller('Day3Ctrl', function($scope) {
+
+		// svg parameters
+		var width = 500, height = 500, margin = 25;
+
+		// select our svg element, set up some properties
+		var svg = d3.select("svg");
+		svg.attr("width",width).attr("height",height);
+
+		// build the scales
+		var xScale = d3.scale.linear().domain([0,1]).range([margin,width-margin]);
+		var yScale = d3.scale.linear().domain([-1,1]).range([height-margin,margin]);
+
+		// generate the sine wave
+		$scope.color = "red";
+		var numPts = 100;
+		var data = new Array(numPts);
+		for (var idx = 0; idx < numPts; idx++) {
+				data[idx] = {
+						x: idx/numPts,
+						y: Math.sin(2*Math.PI*idx/numPts)
+				}
+		}
+
+		var update = function() {
+
+				// advance the wave
+				var temp = data[0].y;
+				for (var idx = 1; idx < numPts; idx++) {
+						data[idx-1].y = data[idx].y;
+				}
+				data[numPts-1].y = temp;
+
+				// update the path
+				svg.selectAll("path").data(data)
+						.transition().duration(100)
+						.attr("d", lineFunction(data))
+						.attr("stroke", $scope.color);
+
+		}
+
+		// sine function
+		var lineFunction = d3.svg.line()
+				.x(function(d) { return xScale(d.x); })
+				.y(function(d) { return yScale(d.y); })
+				.interpolate("basis");
+
+		// draw the path
+		svg.append("path")
+				.attr("d", lineFunction(data))
+				.attr("stroke", $scope.color)
+				.attr("stroke-width", 2)
+				.attr("fill", "none");
+
+		// start the timer
+		setInterval(function() {
+				update();
+		}, 20);
 
 });
