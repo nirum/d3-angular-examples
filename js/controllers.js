@@ -8,7 +8,8 @@ angular.module('d3-100.controllers', [], function() {})
    $scope.visualizations = [
 				"Linear Regression",
 				"Moving Dots",
-				"Sine Wave"
+				"Sine Wave",
+				"Stock Data"
 		];
 })
 
@@ -204,5 +205,137 @@ angular.module('d3-100.controllers', [], function() {})
 		setInterval(function() {
 				update();
 		}, 20);
+
+})
+
+.controller('Day4Ctrl', function($scope) {
+
+		// parameters
+		$scope.loading = true;
+		var width = 500, height = 500, margin = 50;
+		var barWidth = 90;
+		var xScale, yScale;
+		var symbols = new Array(4);
+
+		// data properties
+		$scope.properties = [
+				{ name: "Price", slug: "price" },
+				{ name: "Year High", slug: "yearHigh" },
+				{ name: "Year Low", slug: "yearLow" },
+				{ name: "Previous Close", slug: "previousClose" }
+		];
+		$scope.property = $scope.properties[0];
+		$scope.change = function(option) {
+				$scope.property = option;
+				redraw();
+		}
+
+		// select our svg element, set up some properties
+		var svg = d3.select("svg");
+		svg.attr("width",width).attr("height",height);
+
+		// get data
+		var data = new Array(4);
+		d3.json("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22YHOO%22%2C%22FB%22%2C%22YELP%22%2C%22MSFT%22)%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json", function(error, json) {
+				if(error) {
+						return console.warn(error);
+				}
+
+				// format the data
+				var json = json.query.results.quote;
+				for (var idx = 0; idx < data.length; idx++) {
+						data[idx] = {
+								symbol: json[idx].Symbol,
+								yearHigh: json[idx].YearHigh,
+								yearLow: json[idx].YearLow,
+								price: json[idx].AskRealtime,
+								previousClose: json[idx].PreviousClose
+						}
+						symbols[idx] = json[idx].Symbol;
+				}
+
+				// get rid of the loading bar
+				$scope.$apply(function() {
+						$scope.loading = false;
+				});
+
+				// plot the data
+				draw();
+		});
+
+		// plots data for the first time
+		var draw = function() {
+
+				// update scales
+				var maxVal = Math.ceil(d3.max(data, function(d) { return d["yearHigh"] }));
+				xScale = d3.scale.ordinal().domain(data.map(function(d) { return d.symbol; })).rangeRoundBands([width-0.1*margin,1.7*margin,1.7*margin]);
+
+				yScale = d3.scale.linear().domain([0,maxVal]).range([height-margin,margin]);
+				y			 = d3.scale.linear().domain([maxVal,0]).range([height-margin,margin]);
+
+				// plot bars
+				svg.selectAll("rect").data(data)
+						.enter().append("rect")
+						.attr("stroke", "black")
+						.attr("stroke-width", 3)
+						.attr("fill", "steelblue")
+						.attr("x", function(d) { return xScale(d["symbol"]); })
+						.attr("y", function(d) { return yScale(d[$scope.property.slug]) })
+						.attr("width", barWidth)
+						.attr("height", function(d) {return y(d[$scope.property.slug])-margin-3 });
+
+				// add values
+				svg.selectAll("text").data(data)
+						.enter().append("text")
+						.style("font-size", "22px")
+						.attr("x", function(d) { return xScale(d["symbol"]); })
+						.attr("y", function(d) { return yScale(d[$scope.property.slug])-10 } )
+						.attr("dx", "0.7em")
+						.text(function(d) { return d[$scope.property.slug]+"" });
+
+				// Axes
+				var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+				svg.append("g").attr("class","axis")
+						.attr("transform", "translate(-8," + (height-margin) + ")")
+						.call(xAxis);
+				var yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5);
+				svg.append("g").attr("class","axis")
+						.attr("transform", "translate(" + 1.5*margin + ",0)")
+						.call(yAxis);
+
+				// Labels
+				svg.append("text")
+						.attr("x", width/2)
+						.attr("y", height-5)
+						.style("font-size", "22px")
+						.attr("fill", "steelblue")
+						.text("Company");
+				svg.append("text")
+						.attr("x",20)
+						.attr("y", height/2)
+						.style("font-size", "22px")
+						.attr("fill", "steelblue")
+						.text("$");
+
+		}
+
+		// redraws data
+		var redraw = function() {
+
+				// update bars
+				svg.selectAll("rect").data(data)
+						.transition()
+						.duration(1000)
+						.attr("y", function(d) { return yScale(d[$scope.property.slug]) })
+						.attr("height", function(d) {return y(d[$scope.property.slug])-margin-3 });
+
+				// update text
+				svg.selectAll("text").data(data)
+						.transition()
+						.duration(1000)
+						.attr("y", function(d) { return yScale(d[$scope.property.slug])-10 } )
+						.text(function(d) { return d[$scope.property.slug] });
+
+		}
 
 });
