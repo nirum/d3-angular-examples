@@ -10,3 +10,5 @@ I'll be adding one visualization a day. The full list is here:
 - August 25, 2013: Linear Regression
 - August 26, 2013: Moving Dots
 - August 27, 2013: Sine Wave
+- August 28, 2013: Stock Data
+- August 29, 2013: Random Walk

@@ -1,0 +1,25 @@
+<div class="row">
+   <div class="col-sm-8">
+      <svg></svg>
+   </div>
+   <div class="col-sm-4">
+      <h4>Random Walk</h4>
+			<p>This <a href="http://en.wikipedia.org/wiki/Random_walk">random walk</a> takes a random Gaussian step at each time point.</p>
+			<p>
+				<button ng-show="run" type="button" class="btn btn-info" ng-click="run = false;">Pause</button>
+				<button ng-hide="run" type="button" class="btn btn-success" ng-click="run = true;">Go</button>
+				<button type="button" class="btn btn-danger" ng-click="clear()">Clear</button>
+			</p>
+			<br />
+      <div class="row">
+         <form class="form-horizontal" role="form">
+            <div class="form-group">
+               <label for="color" class="col-xs-4 control-label">Color</label>
+               <div class="col-xs-8">
+									 <input type="text" class="form-control" ng-model="color" >
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

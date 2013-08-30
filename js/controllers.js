@@ -9,7 +9,8 @@ angular.module('d3-100.controllers', [], function() {})
 				"Linear Regression",
 				"Moving Dots",
 				"Sine Wave",
-				"Stock Data"
+				"Stock Data",
+                "Random Walk"
 		];
 })
 
@@ -337,5 +338,71 @@ angular.module('d3-100.controllers', [], function() {})
 						.text(function(d) { return d[$scope.property.slug] });
 
 		}
+})
 
+.controller('Day5Ctrl', function($scope) {
+
+		// svg parameters
+		var width = 500, height = 500, margin = 25;
+
+		// select our svg element, set up some properties
+		var svg = d3.select("svg");
+		svg.attr("width",width).attr("height",height);
+
+		// build the scales
+		var xScale = d3.scale.linear().domain([0,1]).range([margin,width-margin]);
+		var yScale = d3.scale.linear().domain([-20,20]).range([height-margin,margin]);
+
+        // generate a random walk
+        $scope.numTimesteps = 100;
+        $scope.variance = 1;
+        $scope.color = "#2ea";
+        var data;
+        var genWalk = function() {
+
+            data = new Array($scope.numTimesteps);
+            data[0] = { x: 0, y: 0 };
+
+            for (var idx = 1; idx < $scope.numTimesteps; idx++) {
+                data[idx] = {
+                    x: idx/$scope.numTimesteps,
+                    y: data[idx-1].y + d3.random.normal(0,$scope.variance)()
+                }
+            }
+        }
+
+		// line function
+        var lineFunction = d3.svg.line()
+                .x(function(d) { return xScale(d.x); })
+                .y(function(d) { return yScale(d.y); })
+                .interpolate("basis");
+
+        // control flow
+        $scope.run = true;
+        $scope.clear = function() {
+            svg.selectAll("path").remove();
+        }
+
+		// start the timer
+		setInterval(function() {
+
+            if ($scope.run) {
+                // generate data
+                genWalk();
+
+                // make old path gray
+                svg.selectAll("path").transition().duration(500).attr("stroke","#ddd");
+
+    		    // draw the new path
+                svg.append("path")
+                    .attr("fill-opacity", 0)
+                    .attr("stroke-opacity", 0)
+                    .transition().duration(500)
+                    .attr("d", lineFunction(data))
+                    .attr("stroke", $scope.color)
+                    .attr("stroke-opacity", 1)
+                    .attr("stroke-width", 2);
+            }
+
+		}, 1000);
 });
