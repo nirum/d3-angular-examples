@@ -10,7 +10,8 @@ angular.module('d3-100.controllers', [], function() {})
 				"Moving Dots",
 				"Sine Wave",
 				"Stock Data",
-                "Random Walk"
+        "Random Walk",
+				"Pie Chart"
 		];
 })
 
@@ -372,16 +373,16 @@ angular.module('d3-100.controllers', [], function() {})
         }
 
 		// line function
-        var lineFunction = d3.svg.line()
-                .x(function(d) { return xScale(d.x); })
-                .y(function(d) { return yScale(d.y); })
-                .interpolate("basis");
+    var lineFunction = d3.svg.line()
+				.x(function(d) { return xScale(d.x); })
+        .y(function(d) { return yScale(d.y); })
+        .interpolate("basis");
 
-        // control flow
-        $scope.run = true;
-        $scope.clear = function() {
-            svg.selectAll("path").remove();
-        }
+    // control flow
+    $scope.run = true;
+    $scope.clear = function() {
+				svg.selectAll("path").remove();
+    }
 
 		// start the timer
 		setInterval(function() {
@@ -393,7 +394,7 @@ angular.module('d3-100.controllers', [], function() {})
                 // make old path gray
                 svg.selectAll("path").transition().duration(500).attr("stroke","#ddd");
 
-    		    // draw the new path
+								// draw the new path
                 svg.append("path")
                     .attr("fill-opacity", 0)
                     .attr("stroke-opacity", 0)
@@ -405,4 +406,61 @@ angular.module('d3-100.controllers', [], function() {})
             }
 
 		}, 1000);
+})
+
+.controller('Day6Ctrl', function($scope) {
+
+		// svg parameters
+		var width = 500, height = 500, margin = 25, radius = Math.min(width, height) / 2;
+    var color = d3.scale.category20c();     //builtin range of colors
+
+		// select our svg element, set up some properties
+		var svg = d3.select("svg")
+				.attr("width",width).attr("height",height)
+				.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+		// set up the data
+		data = [ { name: "Lenna", value: 24 }, { name: "Ada", value: 47 }, { name: "Julia", value: 78 } ];
+
+		// build the arc
+		var arc = d3.svg.arc()
+				.outerRadius(radius - 10)
+				.innerRadius(0);
+
+		// and the pie
+		var pie = d3.layout.pie()
+				.sort(null)
+				.value(function(d) { return d.value; });
+
+		var g = svg.selectAll(".arc")
+				.data(pie(data))
+				.enter().append("g")
+				.attr("class", "arc");
+
+		g.append("path")
+				.attr("d", arc)
+				.style("fill", function(d) { return color(d.data.name); });
+
+		g.append("text")
+				.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+				.attr("dy", ".35em")
+				.style("text-anchor", "middle")
+				.style("font-size", "28px")
+				.attr("fill", "#222")
+				.text(function(d) { return d.data.name; });
+})
+
+.controller('Day7Ctrl', function($scope) {
+
+		// svg parameters
+		var width = 500, height = 500, margin = 25;
+
+		// select our svg element, set up some properties
+		var svg = d3.select("svg");
+		svg.attr("width",width).attr("height",height);
+
+		// build the scales
+		var xScale = d3.scale.linear().domain([0,10]).range([margin,width-margin]);
+		var yScale = d3.scale.linear().domain([-20,20]).range([height-margin,margin]);
+
 });
