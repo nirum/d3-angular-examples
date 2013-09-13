@@ -1,4 +1,4 @@
-# d3-angular exampels
+# d3-angular examples
 
 Some toy visualizations made with [d3.js](http://www.d3js.org/) and [AngularJS](http://www.angularjs.org/).
 
