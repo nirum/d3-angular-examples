@@ -6,9 +6,8 @@
          </div>
 				 <div class="panel-body">
 						 <p>To get a better grasp of the
-            <a href="http://d3js.org/">d3.js</a> visualization library, I've decided to make 100 toy example visualizations over
-						the course of 100 days.</p>
-						<p> If you have suggestions or comments, email me at <a href="mailto:nirum@stanford.edu">nirum@stanford.edu</a>. I'll be adding one a day. The full list is to the right.</p>
+            <a href="http://d3js.org/">d3.js</a> visualization library, I've decided to make some toy visualizations, also using Angular's data binding.</p>
+						<p> If you have suggestions or comments, email me at <a href="mailto:nirum@stanford.edu">nirum@stanford.edu</a>.</p>
 				</div>
       </div>
    </div>
@@ -19,7 +18,7 @@
 			     </div>
 					 <div class="panel-body">
 							 <ul class="nav nav-pills nav-stacked" ng-repeat="viz in visualizations">
-									 <li><a href="#/day{{ $index+1}}">Day {{ $index+1 }} - {{ viz }}</a></li>
+									 <li><a href="#/viz{{ $index+1}}">{{ $index+1 }} - {{ viz }}</a></li>
 							 </ul>
 					 </div>
 			 </div>

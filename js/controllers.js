@@ -2,7 +2,7 @@
  * Controllers
  */
 
-angular.module('d3-100.controllers', [], function() {})
+angular.module('d3-angular.controllers', [], function() {})
 
 .controller('ListCtrl', function($scope) {
    $scope.visualizations = [
@@ -15,7 +15,7 @@ angular.module('d3-100.controllers', [], function() {})
 		];
 })
 
-.controller('Day1Ctrl', function($scope) {
+.controller('Viz1Ctrl', function($scope) {
 
 		// svg parameters
 		var width = 500, height = 500, margin = 50;
@@ -75,7 +75,7 @@ angular.module('d3-100.controllers', [], function() {})
 
 })
 
-.controller('Day2Ctrl', function($scope) {
+.controller('Viz2Ctrl', function($scope) {
 
 		// svg parameters
 		var width = 500, height = 500, margin = 10;
@@ -149,7 +149,7 @@ angular.module('d3-100.controllers', [], function() {})
 
 })
 
-.controller('Day3Ctrl', function($scope) {
+.controller('Viz3Ctrl', function($scope) {
 
 		// svg parameters
 		var width = 500, height = 500, margin = 25;
@@ -210,7 +210,7 @@ angular.module('d3-100.controllers', [], function() {})
 
 })
 
-.controller('Day4Ctrl', function($scope) {
+.controller('Viz4Ctrl', function($scope) {
 
 		// parameters
 		$scope.loading = true;
@@ -341,7 +341,7 @@ angular.module('d3-100.controllers', [], function() {})
 		}
 })
 
-.controller('Day5Ctrl', function($scope) {
+.controller('Viz5Ctrl', function($scope) {
 
 		// svg parameters
 		var width = 500, height = 500, margin = 25;
@@ -408,7 +408,7 @@ angular.module('d3-100.controllers', [], function() {})
 		}, 1000);
 })
 
-.controller('Day6Ctrl', function($scope) {
+.controller('Viz6Ctrl', function($scope) {
 
 		// svg parameters
 		var width = 500, height = 500, margin = 25, radius = Math.min(width, height) / 2;
@@ -450,7 +450,7 @@ angular.module('d3-100.controllers', [], function() {})
 				.text(function(d) { return d.data.name; });
 })
 
-.controller('Day7Ctrl', function($scope) {
+.controller('Viz7Ctrl', function($scope) {
 
 		// svg parameters
 		var width = 500, height = 500, margin = 25;
