@@ -1,0 +1,23 @@
+<div class="row">
+   <div class="col-sm-8">
+			<div ng-show="loading"><h3 style="text-align: center;"><i class="icon-spinner icon-spin icon-large"></i> Loading data ...</h3></div>
+			<div ng-hide="loading"><h3 style="text-align: center; margin-bottom: -20px;">{{ property.name }}</h3></div>
+      <svg></svg>
+   </div>
+   <div class="col-sm-4">
+      <h4>Stock Data</h4>
+			<p>Data provided via the Yahoo Finance API.</p>
+			<br />
+      <div class="row">
+         <form class="form-horizontal" role="form">
+            <div class="form-group">
+               <label for="property" class="col-xs-4 control-label">Value:</label>
+               <div class="col-xs-8">
+										<select class="form-control" ng-model="property" ng-options="property.name for property in properties" ng-change="change(property)">
+										</select>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

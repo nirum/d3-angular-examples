@@ -1,0 +1,26 @@
+<div class="row">
+   <div class="col-sm-5">
+      <div class="panel panel-primary">
+         <div class="panel-heading">
+            <h3 class="panel-title">About</h3>
+         </div>
+				 <div class="panel-body">
+						 <p>To get a better grasp of the
+            <a href="http://d3js.org/">d3.js</a> visualization library, I've decided to make some toy visualizations, also using Angular's data binding.</p>
+						<p> If you have suggestions or comments, email me at <a href="mailto:nirum@stanford.edu">nirum@stanford.edu</a>.</p>
+				</div>
+      </div>
+   </div>
+	 <div class="col-sm-7">
+			 <div class="panel panel-primary">
+			     <div class="panel-heading">
+							 <h3 class="panel-title">List of Visualizations</h3>
+			     </div>
+					 <div class="panel-body">
+							 <ul class="nav nav-pills nav-stacked" ng-repeat="viz in visualizations">
+									 <li><a href="#/viz{{ $index+1}}">{{ $index+1 }} - {{ viz }}</a></li>
+							 </ul>
+					 </div>
+			 </div>
+	 </div>
+</div>

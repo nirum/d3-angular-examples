@@ -1,0 +1,97 @@
+/*
+ * Custom CSS for d3-100
+ */
+
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 930px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+// List page
+.nav-pills {
+		font-size: 18px;
+}
+
+.panel-body {
+		font-size: 16px;
+}
+
+/* Custom page footer */
+.footer {
+  margin-top: 19px;
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.footer-text {
+		font-size: 14px;
+		font-style: italic;
+		font-family: Georgia, serif;
+}
+
+// axes
+.axis path,
+.axis tick {
+}
+
+.axis path, .axis tick {
+		stroke: black;
+		stroke-width: 1px;
+		fill: none;
+		shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 18px;
+}
