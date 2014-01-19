@@ -11,7 +11,8 @@ angular.module('d3-angular.controllers', [], function() {})
 				"Sine Wave",
 				"Stock Data",
         "Random Walk",
-				"Pie Chart"
+				"Pie Chart",
+				"Network Layout"
 		];
 })
 
@@ -455,12 +456,92 @@ angular.module('d3-angular.controllers', [], function() {})
 		// svg parameters
 		var width = 500, height = 500, margin = 25;
 
-		// select our svg element, set up some properties
-		var svg = d3.select("svg");
-		svg.attr("width",width).attr("height",height);
+		// radius for making connections
+		$scope.radius = 100;
 
-		// build the scales
-		var xScale = d3.scale.linear().domain([0,10]).range([margin,width-margin]);
-		var yScale = d3.scale.linear().domain([-20,20]).range([height-margin,margin]);
+		var fill = d3.scale.category20();
+
+		var force = d3.layout.force()
+				.size([width, height])
+				.nodes([])
+				.linkDistance(30)
+				.charge(-60)
+				.on("tick", tick);
+
+		// select our svg element, set up some properties
+		var svg = d3.select("svg")
+				.attr("width",width)
+				.attr("height",height)
+
+		// add a box
+		svg.append("rect")
+				.attr("width",width)
+				.attr("height",height)
+				.attr("stroke", "#999")
+				.attr("stroke-width", "3")
+				.attr("fill", "#fff");
+
+		// initialize the nodes
+		var nodes = force.nodes(),
+				links = force.links(),
+				node = svg.selectAll(".node"),
+				link = svg.selectAll(".link")
+
+		// add a node
+    $scope.addNode = function() {
+				
+				// generate a new point
+				var node = getRandomPoint(),
+						n = nodes.push(node);
+
+				// add links to any nearby nodes
+				nodes.forEach(function(target) {
+						var x = target.x - node.x,
+								y = target.y - node.y;
+
+						// if nodes are within a sphere of radius R, create a link between them
+						if (Math.sqrt(x*x + y*y) < $scope.radius) {
+								links.push({source: node, target: target});
+						}
+				});
+
+				// reload
+				restart();
+		}
+
+		function getRandomPoint() {
+				return {x: Math.floor(Math.random() * (width + 1)),
+								y: Math.floor(Math.random() * (height + 1)) };
+		}
+
+		function tick() {
+				link.attr("x1", function(d) { return d.source.x; })
+					.attr("y1", function(d) { return d.source.y; })
+					.attr("x2", function(d) { return d.target.x; })
+					.attr("y2", function(d) { return d.target.y; });
+
+				node.attr("cx", function(d) { return d.x; })
+					.attr("cy", function(d) { return d.y; });
+		}
+
+		function restart() {
+
+				// add links between nodes
+				link = link.data(links);
+				link.enter().insert("line", ".node")
+						.attr("class", "link")
+
+				// add new nodes
+				node = node.data(nodes);
+				node.enter().insert("circle", ".cursor")
+						.attr("class", "node")
+						.attr("r", 5)
+						.call(force.drag);
+
+				// start the force layout
+				force.start();
+		}
+
+
 
 });

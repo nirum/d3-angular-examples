@@ -1,5 +1,5 @@
 /*
- * 100 d3 visualizations in 100 days
+ * d3 visualizations + angular JS
  */
 
 angular.module('d3-angular', ['d3-angular.controllers']).

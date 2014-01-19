@@ -3,20 +3,18 @@
       <svg></svg>
    </div>
    <div class="col-sm-4">
-      <h4>Random Walk</h4>
-			<p>This <a href="http://en.wikipedia.org/wiki/Random_walk">random walk</a> takes a random Gaussian step at each time point.</p>
+      <h4>Network Layout</h4>
+			<p>This generates a network of nodes. The radius parameter below controls how likely connections are to be formed when adding nodes, a large radius means that connections are very likely.</p>
 			<p>
-				<button ng-show="run" type="button" class="btn btn-info" ng-click="run = false;">Pause</button>
-				<button ng-hide="run" type="button" class="btn btn-success" ng-click="run = true;">Go</button>
-				<button type="button" class="btn btn-danger" ng-click="clear()">Clear</button>
+				<button type="button" class="btn btn-success" ng-click="addNode()">Add a Node</button>
 			</p>
 			<br />
       <div class="row">
          <form class="form-horizontal" role="form">
             <div class="form-group">
-               <label for="color" class="col-xs-4 control-label">Color</label>
+               <label for="radius" class="col-xs-4 control-label">Radius</label>
                <div class="col-xs-8">
-									 <input type="text" class="form-control" ng-model="color" >
+									 <input type="text" class="form-control" ng-model="radius" >
                </div>
             </div>
          </form>
