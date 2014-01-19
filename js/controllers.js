@@ -421,7 +421,7 @@ angular.module('d3-angular.controllers', [], function() {})
 				.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 		// set up the data
-		data = [ { name: "Lenna", value: 24 }, { name: "Ada", value: 47 }, { name: "Julia", value: 78 } ];
+		data = [ { name: "Alan", value: 24 }, { name: "Ada", value: 47 }, { name: "Julia", value: 78 } ];
 
 		// build the arc
 		var arc = d3.svg.arc()
